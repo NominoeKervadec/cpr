@@ -1,0 +1,3 @@
+[submodule "subprojects/cppcoro"]
+	path = subprojects/cppcoro
+	url = https://github.com/nominoekervadec/cppcoro
