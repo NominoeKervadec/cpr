@@ -1,3 +1,32 @@
+# Fork adding very basic coroutine support from [cppcoro](https://github.com/https://github.com/lewissbaker/cppcoro)
+```c++
+#include <iostream>
+#include <cppcoro/sync_wait.hpp>
+#include <cppcoro/task.hpp>
+#include <cpr/api.h>
+#include <cppcoro/when_all.hpp>
+
+using namespace cppcoro;
+namespace {
+
+    auto test() -> task<> {
+        auto a = cpr::GetCoro(cpr::Url{"http://google.fr"});
+        auto b = cpr::GetCoro(cpr::Url{"http://fsf.org"});
+        auto [r_a, r_b] = co_await when_all(std::move(a), std::move(b));
+        
+        std::cout << r_a.status_code << std::endl;
+        std::cout << r_b.status_code << std::endl;
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    sync_wait(test());
+    return 0;
+}
+
+```
+
 # C++ Requests: Curl for People <img align="right" height="40" src="http://i.imgur.com/d9Xtyts.png">
 
 [![Documentation](https://img.shields.io/badge/docs-online-informational?style=flat&link=https://whoshuu.github.io/cpr/)](https://whoshuu.github.io/cpr/)
